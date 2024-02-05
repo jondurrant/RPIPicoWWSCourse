@@ -1,0 +1,24 @@
+[submodule "lib/RPIPicoWWSClient-RTOS"]
+	path = lib/RPIPicoWWSClient-RTOS
+	url = https://github.com/jondurrant/RPIPicoWWSClient-RTOS
+[submodule "lib/wolfssl"]
+	path = lib/wolfssl
+	url = https://github.com/wolfSSL/wolfssl
+[submodule "lib/coreJSON"]
+	path = lib/coreJSON
+	url = https://github.com/FreeRTOS/coreJSON/
+[submodule "lib/FreeRTOS-Kernel"]
+	path = lib/FreeRTOS-Kernel
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel
+[submodule "lib/uri-library"]
+	path = lib/uri-library
+	url = https://github.com/ben-zen/uri-library
+[submodule "lib/json-maker"]
+	path = lib/json-maker
+	url = https://github.com/rafagafe/json-maker
+[submodule "lib/coreHTTP"]
+	path = lib/coreHTTP
+	url = https://github.com/FreeRTOS/coreHTTP
+[submodule "lib/tiny-json"]
+	path = lib/tiny-json
+	url = https://github.com/rafagafe/tiny-json
