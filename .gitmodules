@@ -22,3 +22,6 @@
 [submodule "lib/tiny-json"]
 	path = lib/tiny-json
 	url = https://github.com/rafagafe/tiny-json
+[submodule "lib/uriparser"]
+	path = lib/uriparser
+	url = https://github.com/uriparser/uriparser
