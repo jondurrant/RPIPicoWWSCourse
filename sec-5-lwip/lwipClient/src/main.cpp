@@ -146,6 +146,7 @@ int main( void )
 	httpc_connection_t settings;
 	settings.result_fn = result;
 	settings.headers_done_fn = headers;
+	settings.use_proxy=false;
 	err_t err = httpc_get_file_dns(
 		SERVER_HOST,
 		SERVER_PORT,
