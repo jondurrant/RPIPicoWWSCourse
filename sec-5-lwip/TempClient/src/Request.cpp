@@ -64,9 +64,8 @@ bool Request::get(
 			length +=  it->first.length();
 			pBuffer[length++] = '=';
 
-			//strcpy(&pBuffer[length],  it->second.c_str());
-			//length +=  it->second.length();
-			length += urlEncode(&pBuffer[length],  it->second.c_str());
+			strcpy(&pBuffer[length],  it->second.c_str());
+			length +=  it->second.length();
 
 			it++;
 			if ( it != query->end()){
@@ -181,23 +180,3 @@ const char * Request::getUriChar(){
 	return pUri->to_string().c_str();
 }
 
-
-int Request::urlEncode(char *target, const char * source){
-	int length = strlen(source);
-	int targetInd = 0;
-
-	for (int i=0; i < length; i++){
-		char c = source[i];
-		if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
-			target[targetInd++] = c;
-		} else {
-			if (c < 16){
-				sprintf(&target[targetInd], "%%0%X", c);
-			} else {
-				sprintf(&target[targetInd], "%%%X", c);
-			}
-			targetInd+=3;
-		}
-	}
-	return targetInd;
-}
