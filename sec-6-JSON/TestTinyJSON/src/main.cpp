@@ -66,8 +66,6 @@ int main( void )
 	}
 	printf("%d\n", day);
 
-
-
    for (;;){
 	   sleep_ms(3000);
    }
