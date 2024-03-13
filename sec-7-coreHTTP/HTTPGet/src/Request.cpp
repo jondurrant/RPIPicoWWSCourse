@@ -234,38 +234,6 @@ bool Request::doRequest(const char * method, const char * url, const char * payl
 }
 
 
-
-bool Request::post(const char * url,  std::map<std::string, std::string> *query){
-	char payload[REQUEST_MAX_PATH] = "";
-	int length=0;
-	bool res;
-
-
-	if (query != NULL){
-
-			size_t remLen = REQUEST_MAX_PATH;
-		   char* s = json_objOpen( payload,  NULL,  &remLen );
-
-			std::map<std::string, std::string>::iterator it = query->begin();
-			while (it != query->end()){
-
-				s = json_str( s,  it->first.c_str(), it->second.c_str(), &remLen );
-
-				it++;
-			}
-			s = json_objClose( s, &remLen );
-			s = json_end( s, &remLen );
-
-#ifdef REQUEST_DEBUG
-			printf("Payload %s\n", payload);
-#endif
-			length = strlen(payload);
-	}
-
-	res = doRequest("POST", url, payload, length);
-	return res;
-}
-
 int Request::getStatusCode(){
 	return xResponse.statusCode;
 }

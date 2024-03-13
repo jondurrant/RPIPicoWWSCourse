@@ -15,6 +15,7 @@
 #include <uri.hh>
 #include "core_http_client.h"
 #include "TCPTransport.h"
+#include "TLSTransBlock.h"
 
 #ifndef REQUEST_BUFFER_SIZE
 #define REQUEST_BUFFER_SIZE 256
@@ -64,6 +65,14 @@ public:
 	 * @return true if successful
 	 */
 	bool get(const char * url, std::map<std::string, std::string> *query = NULL);
+
+	/***
+	 * Undertake an HTTP Post
+	 * @param url - URL to connect to
+	 * @param query - Query to send as name/value pairs
+	 * @return true if successful
+	 */
+	bool post(const char * url,  std::map<std::string, std::string> *query = NULL);
 
 	/**
 	 * Get the HTTP result code
@@ -139,6 +148,7 @@ private:
 	HTTPStatus_t xHTTPStatus = HTTPSuccess;
 
 	TCPTransport xSockTrans;
+	TLSTransBlock xTLSTrans;
 	Transport *pTrans;
 
 };

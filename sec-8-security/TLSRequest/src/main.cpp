@@ -1,5 +1,5 @@
 /***
- * main.cpp - SOCKET for HTTP HACK
+ * main.cpp - HTTP POST over TLS
  * Jon Durrant
  * 4-Mar-2024
  *
@@ -19,7 +19,9 @@
 #include <stdio.h>
 
 #include "WifiHelper.h"
-#include "TCPTransport.h"
+#include "Request.h"
+
+
 
 //Check these definitions where added from the makefile
 #ifndef WIFI_SSID
@@ -30,7 +32,7 @@
 #endif
 
 #define TASK_PRIORITY     ( tskIDLE_PRIORITY + 1UL )
-
+#define BUF_LEN					2048
 
 
 void runTimeStats(){
@@ -87,53 +89,16 @@ void runTimeStats(){
 }
 
 
-/***
- * Do a HTTP GET Request
- */
-void doRequest(){
-	uint16_t targetPort = 5000;
-	char targetHost[]="vmu22a.local.jondurrant.com";
-	char message[]="GET /time HTTP/1.1\r\n"
-					"Host: localhost\r\n"
-					"Connection: close\r\n"
-					"\r\n";
-	char buf[1024];
-	int32_t retVal;
 
-	TCPTransport sockTrans;
 
-	if (!sockTrans.transConnect(targetHost, targetPort)){
-		printf("Socket Connect Failed\r\n");
-		return ;
-	}
-
-	retVal = sockTrans.transSend(message, strlen(message));
-	if (retVal != strlen(message)){
-		printf("Socket Send failed\n\r");
-		return ;
-	}
-
-	retVal = 1;
-
-	while (retVal >= 0){
-		retVal = sockTrans.transRead(buf, sizeof(buf));
-		if (retVal > 0){
-			sockTrans.debugPrintBuffer("READ:", buf, retVal);
-		}
-	}
-
-	sockTrans.transClose();
-
+void debugCB(const int logLevel, const char *const logMessage){
+	printf("WOLFSSL DEBUG(%d): %s\n", logLevel, logMessage);
 }
-
-
-
 
 
 void main_task(void* params){
 
 	printf("Main task started\n");
-
 
 	if (WifiHelper::init()){
 	printf("Wifi Controller Initialised\n");
@@ -158,10 +123,40 @@ void main_task(void* params){
 	printf("IP ADDRESS: %s\n", ipStr);
 
 
-	//Do HTTP Post
-	doRequest();
+	//Call Web Service
+	char userBuf[BUF_LEN];
+	Request req((char *)userBuf, BUF_LEN);
+	bool res;
+	char url[] = "https://vmu22a.local.jondurrant.com:5443/temp";
+	std::map<std::string, std::string> query;
 
-	runTimeStats();
+
+	printf("HTTPS POST\n");
+	query["temp"]="19.2";
+	res = req.post(url, &query);
+	if ( res ){
+		res = (req.getStatusCode() == 200);
+	}
+	if (res){
+		printf("Result: %.*s\n", req.getPayloadLen(), req.getPayload());
+	} else {
+		printf("Request failed %d\n", req.getStatusCode());
+	}
+
+
+	printf("HTTPS GET\n");
+	char url2[] = "https://vmu22a.local.jondurrant.com:5443/args";
+	query["name"]="Jon";
+	query["desc"]="Yes Sir";
+	res = req.get(url2, &query);
+	if ( res ){
+		res = (req.getStatusCode() == 200);
+	}
+	if (res){
+		printf("Result: %.*s\n", req.getPayloadLen(), req.getPayload());
+	} else {
+		printf("Request failed %d\n", req.getStatusCode());
+	}
 
 
 

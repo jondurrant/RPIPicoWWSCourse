@@ -67,11 +67,12 @@ bool Request::get(const char * url, std::map<std::string, std::string> *query){
 				strcpy(&path[length],  it->first.c_str());
 				length +=  it->first.length();
 				path[length++] = '=';
-				length += urlEncode(&pBuffer[length],  it->second.c_str());
+				length += urlEncode(&path[length],  it->second.c_str());
 
 				it++;
 				if ( it != query->end()){
 					path[length++] = '&';
+				} else {
 					path[length++] = 0;
 				}
 			}
@@ -103,6 +104,14 @@ bool Request::doRequest(const char * method, const char * url, const char * payl
 		}
 #ifdef REQUEST_DEBUG
 		printf("HTTP on Port %d\n", serverPort);
+#endif
+	} else if (pUri->get_scheme().compare("https") == 0 ){
+		pTrans =&xTLSTrans;
+		if (serverPort == 0){
+			serverPort = 443;
+		}
+#ifdef REQUEST_DEBUG
+		printf("HTTPS on Port %d\n", serverPort);
 #endif
 	}  else {
 		printf("Schema not implemented %s\n",

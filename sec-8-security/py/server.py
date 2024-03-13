@@ -98,6 +98,13 @@ def user():
     print("/user OK")
     return json.dumps(r)
 
+@app.route('/args', methods=['GET'])
+def args():
+    print("/Args: ")
+    for key in request.args:
+        print(" %s=%s"%(key, request.args[key]))
+    
+    return json.dumps(request.args)
 
 if __name__ == "__main__":
     app.secret_key = 'LCARS'

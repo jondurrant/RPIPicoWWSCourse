@@ -123,7 +123,7 @@ void main_task(void* params){
 	printf("IP ADDRESS: %s\n", ipStr);
 
 
-	//Call IPGeo Web Service
+	//Call Web Service
 	char userBuf[BUF_LEN];
 	Request req((char *)userBuf, BUF_LEN);
 	bool res;
