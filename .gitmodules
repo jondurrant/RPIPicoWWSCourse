@@ -25,3 +25,9 @@
 [submodule "lib/uriparser"]
 	path = lib/uriparser
 	url = https://github.com/uriparser/uriparser
+[submodule "lib/miniML-Parser"]
+	path = lib/miniML-Parser
+	url = https://github.com/kiishor/miniML-Parser
+[submodule "lib/mxml"]
+	path = lib/mxml
+	url = https://github.com/michaelrsweet/mxml
