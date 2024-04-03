@@ -38,8 +38,11 @@ YouTube::~YouTube() {
 
 void YouTube::init(){
 	xGalacticUnicorn.init();
-	pGraphics->set_pen(10, 0, 0);
+	pGraphics->set_pen(0, 0,0);
 	pGraphics->clear();
+	pGraphics->set_pen(0xC0, 0x30,0x30);
+	pGraphics->set_font("bitmap8");
+	pGraphics->text("You Tube", {0,0},  -1, 1.0);
 	xGalacticUnicorn.update(pGraphics);
 }
 
@@ -92,9 +95,9 @@ int YouTube::getSubs(){
 			}
 		}
 	} else {
-		printf("WSp failed %d\n", req.getStatusCode());
+		printf("WS failed %d\n", req.getStatusCode());
 	}
-	return 0;
+	return -1;
 }
 
 /***
@@ -103,6 +106,14 @@ int YouTube::getSubs(){
  */
 void YouTube::displaySubs(uint subs){
 	Digits6x11 digits;
+
+
+	for (int i = 0; i < xGalacticUnicorn.WIDTH; i++){
+		pGraphics->wipe_right(i);
+		xGalacticUnicorn.update(pGraphics);
+		vTaskDelay(50);
+	}
+
 	pGraphics->set_pen(0, 0, 0);
 	pGraphics->clear();
 

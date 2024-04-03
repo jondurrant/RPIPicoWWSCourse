@@ -144,12 +144,14 @@ void main_task(void* params){
 		int subs = youtube.getSubs();
 		printf("Stats: %d\n" , subs);
 
-		youtube.displaySubs(subs);
+		if (subs > 0){
 
-		printf("Subs displayed\n");
+			youtube.displaySubs(subs);
+		}
 
 
-		//runTimeStats();
+
+		runTimeStats();
 
 		vTaskDelay(60000);
 
