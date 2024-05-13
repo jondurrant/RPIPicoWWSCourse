@@ -149,7 +149,7 @@ void main_task(void* params){
 	res = req.get(url, &query);
 	if ( res ){
 		printf("HTTP Status %d\n", req.getStatusCode());
-		//res = (req.getStatusCode() == 200);
+		res = (req.getStatusCode() == 200);
 	}
 	if (res){
 		printf("IPGeo: %.*s\n", req.getPayloadLen(), req.getPayload());

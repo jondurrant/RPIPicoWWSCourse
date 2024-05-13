@@ -148,9 +148,8 @@ void main_task(void* params){
 	runTimeStats();
 	res = req.get(url, &query);
 	if ( res ){
-		//Getting a HTTP Status 0 from this service which means unknown status.
 		printf("HTTP Status %d\n", req.getStatusCode());
-		//res = (req.getStatusCode() == 200);
+		res = (req.getStatusCode() == 200);
 	}
 	if (res){
 		printf("Headers:\n %.*s\n\n",  req. getHeaderLen(),  req.getHeader());
