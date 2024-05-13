@@ -140,6 +140,7 @@ void main_task(void* params){
 	Request req((char *)userBuf, BUF_LEN);
 	bool res;
 	char url[] = "https://api.ipgeolocation.io/ipgeo";
+	//char url[] = "https://vmu22a.local.jondurrant.com:5443/args";
 
 	std::map<std::string, std::string> query;
 
@@ -147,9 +148,12 @@ void main_task(void* params){
 	runTimeStats();
 	res = req.get(url, &query);
 	if ( res ){
-		res = (req.getStatusCode() == 200);
+		//Getting a HTTP Status 0 from this service which means unknown status.
+		printf("HTTP Status %d\n", req.getStatusCode());
+		//res = (req.getStatusCode() == 200);
 	}
 	if (res){
+		printf("Headers:\n %.*s\n\n",  req. getHeaderLen(),  req.getHeader());
 		printf("IPGeo: %.*s\n", req.getPayloadLen(), req.getPayload());
 	} else {
 		printf("IPGeo failed %d\n", req.getStatusCode());

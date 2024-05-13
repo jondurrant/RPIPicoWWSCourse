@@ -139,7 +139,7 @@ void main_task(void* params){
 	char userBuf[BUF_LEN];
 	Request req((char *)userBuf, BUF_LEN);
 	bool res;
-	//char url[] = "https://vmu22a.local.jondurrant.com:5443/time";
+	//char url[] = "https://vmu22a.local.jondurrant.com:6443/ipgeo";
 	char url[] = "https://api.ipgeolocation.io/ipgeo";
 
 	std::map<std::string, std::string> query;
@@ -148,7 +148,8 @@ void main_task(void* params){
 	runTimeStats();
 	res = req.get(url, &query);
 	if ( res ){
-		res = (req.getStatusCode() == 200);
+		printf("HTTP Status %d\n", req.getStatusCode());
+		//res = (req.getStatusCode() == 200);
 	}
 	if (res){
 		printf("IPGeo: %.*s\n", req.getPayloadLen(), req.getPayload());
