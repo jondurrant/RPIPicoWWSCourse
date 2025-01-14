@@ -37,9 +37,9 @@ target_compile_definitions(${NAME} PRIVATE
 pico_add_extra_outputs(${NAME})
 
 # enable usb output, disable uart output
-pico_enable_stdio_usb(${NAME} 0)
+pico_enable_stdio_usb(${NAME} 1)
 pico_enable_stdio_uart(${NAME} 1)
 target_compile_definitions(${NAME} PRIVATE
-    PICO_DEFAULT_UART_RX_PIN=16
-    PICO_DEFAULT_UART_TX_PIN=17
+    PICO_DEFAULT_UART_RX_PIN=17
+    PICO_DEFAULT_UART_TX_PIN=16
 )
